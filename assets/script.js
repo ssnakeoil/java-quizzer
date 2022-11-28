@@ -9,6 +9,7 @@ var timer = document.getElementById("timer");
 var start = document.getElementById("start");
 
 // Initializing stats for timer, score, and questions
+var time = 60;
 var scoreCorrect = 0;
 var questionNumber = 0;
 var endIt = false;
@@ -17,42 +18,41 @@ var endIt = false;
 var questionQuestion = [
   {
     questions: "Question 1?",
-    choice: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
     answer: "Option 2",
   },
   {
     questions: "Question 2?",
-    options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
     answer: "Option 4",
   },
   {
     questions: "Question 3?",
-    options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    choiceButtonss: ["Option 1", "Option 2", "Option 3", "Option 4"],
     answer: "Option 3",
   },
   {
     questions: "Question 4?",
-    options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
     answer: "Option 1",
   }
 ]
 
 // Code for timer
 function startTimer(){
-  var time = 60;
   var timeInterval = setInterval(function(){
-    if(endIt && time>0){
-      document.getElementById("timer").innerHTML = "Time Remaining: " + timeLeft;
-      timeLeft--;
+    if(!endIt && time>0){
+      document.getElementById("timer").innerHTML = "Time Remaining: " + time;
+      time--;
     } else {
       clearInterval(timeInterval);  
       endIt = true;
       if(scoreCorrect==0 || time==0){
-          timeLeft=0;
+          time=0;
       }
       questions.textContent = "";
-      choices.innerHTML = "";
-      answerStatus.textContent = "";
+      choiceButtons.innerHTML = "";
+      answerCheck.textContent = "";
     }
   },1000);
 }
@@ -60,14 +60,14 @@ function startTimer(){
 // Attempting to devise a function that populates question in place
 function populateQuestion(array) {
   if(array != undefined){
-      newQuestion = document.createTextNode(array["questions"]);
-      question.append(newQuestion);
+      var newQuestion = document.createTextNode(array["questions"]);
+      questions.append(newQuestion);
       for (i = 0; i < array.choiceButtons.length; i++) {
           button = document.createElement("button");
           button.setAttribute("class", "btn btn-info");
-          button.textContent = array.choices[i];
-          button.setAttribute("data-value", array.choices[i]);
-          choices.append(button);
+          button.textContent = array.choiceButtons[i];
+          button.setAttribute("data-value", array.choiceButtons[i]);
+          choiceButtons.append(button);
       }
   } else {
       endIt = true;
@@ -81,15 +81,15 @@ function populateQuestion(array) {
 // Event listener starts time
 start.addEventListener("click", function () {
   startTimer();
-  var questionDisplay = stages[questionNumber];
-  renderQuestions(questionDisplay);
+  var questionDisplay = questionQuestion[questionNumber];
+  populateQuestion(questionDisplay);
 });
 
 // listens for the selected choices
-choices.addEventListener("click", function (event) {
+choiceButtons.addEventListener("click", function (event) {
   if (event.target.matches("button")) {
       var selectedAnswer = event.target.textContent;
-      if(selectedAnswer != stages[questionNumber].answer){
+      if(selectedAnswer != questionQuestion[questionNumber].answer){
           time -= 10;
           answerCheck.textContent = "Incorrect!";
       }else {
@@ -98,12 +98,12 @@ choices.addEventListener("click", function (event) {
       }
       setTimeout(function () {
           questionNumber++;
-          var questionDisplay = stages[questionNumber];
+          var questionDisplay = questionQuestion[questionNumber];
           if(time<0){
               time=0;
           }
           questions.textContent = "";
-          choices.innerHTML = "";
+          choiceButtons.innerHTML = "";
           populateQuestion(questionDisplay);
       }, 100);
   }
