@@ -6,6 +6,7 @@ var choiceButtons = document.getElementById("choiceButtons");
 var timer = document.getElementById("timer");
 var answerCheck = document.getElementById("answerCheck");
 var timer = document.getElementById("timer");
+var start = document.getElementById("start");
 
 // Initializing stats for timer, score, and questions
 var scoreCorrect = 0;
@@ -70,9 +71,40 @@ function populateQuestion(array) {
       }
   } else {
       endIt = true;
-      answerStatus.textContent = "";
+      answerCheck.textContent = "";
       if(scoreCorrect==0){
-          timeLeft=0;
+          time=0;
       }
   }
 }
+
+// Event listener starts time
+start.addEventListener("click", function () {
+  startTimer();
+  var questionDisplay = stages[questionNumber];
+  renderQuestions(questionDisplay);
+});
+
+// listens for the selected choices
+choices.addEventListener("click", function (event) {
+  if (event.target.matches("button")) {
+      var selectedAnswer = event.target.textContent;
+      if(selectedAnswer != stages[questionNumber].answer){
+          time -= 10;
+          answerCheck.textContent = "Incorrect!";
+      }else {
+          scoreCorrect++;
+          answerCheck.textContent = "Correct!";
+      }
+      setTimeout(function () {
+          questionNumber++;
+          var questionDisplay = stages[questionNumber];
+          if(time<0){
+              time=0;
+          }
+          questions.textContent = "";
+          choices.innerHTML = "";
+          populateQuestion(questionDisplay);
+      }, 100);
+  }
+});
