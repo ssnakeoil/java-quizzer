@@ -4,11 +4,13 @@ var quiz = document.getElementById("quiz");
 var questions = document.getElementById("questions");
 var choiceButtons = document.getElementById("choiceButtons");
 var timer = document.getElementById("timer");
+var answerCheck = document.getElementById("answerCheck");
+var timer = document.getElementById("timer");
 
 // Initializing stats for timer, score, and questions
-var time = 60;
 var scoreCorrect = 0;
 var questionNumber = 0;
+var endIt = false;
 
 // Creating an array carrying arrays? carrying questions, choices and answers
 var questionQuestion = [
@@ -34,3 +36,43 @@ var questionQuestion = [
   }
 ]
 
+// Code for timer
+function startTimer(){
+  var time = 60;
+  var timeInterval = setInterval(function(){
+    if(endIt && time>0){
+      document.getElementById("timer").innerHTML = "Time Remaining: " + timeLeft;
+      timeLeft--;
+    } else {
+      clearInterval(timeInterval);  
+      endIt = true;
+      if(scoreCorrect==0 || time==0){
+          timeLeft=0;
+      }
+      questions.textContent = "";
+      choices.innerHTML = "";
+      answerStatus.textContent = "";
+    }
+  },1000);
+}
+
+// Attempting to devise a function that populates question in place
+function populateQuestion(array) {
+  if(array != undefined){
+      newQuestion = document.createTextNode(array["questions"]);
+      question.append(newQuestion);
+      for (i = 0; i < array.choiceButtons.length; i++) {
+          button = document.createElement("button");
+          button.setAttribute("class", "btn btn-info");
+          button.textContent = array.choices[i];
+          button.setAttribute("data-value", array.choices[i]);
+          choices.append(button);
+      }
+  } else {
+      endIt = true;
+      answerStatus.textContent = "";
+      if(scoreCorrect==0){
+          timeLeft=0;
+      }
+  }
+}
