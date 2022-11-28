@@ -1,2 +1,2 @@
-# java-quizzer
+# javascript-quizzer
 Quiz powered by JavaScript!
