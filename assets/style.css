@@ -41,7 +41,23 @@ body {
 
 #choiceButtons {
   text-align: center;
-  padding-top: 10px;
+  padding-top: 50px;
+}
+
+button {
+  border-color: #5F3215;
+  border-style: solid 2px;
+  border-width: thin;
+  padding: 10px;
+  margin: 0px 0px 5px 100px;
+  border-radius: 5px;
+  background-color: #B89647;
+  display: block;
+}
+
+button:hover {
+  border-color: #B89647;
+  background-color: #D1D274;
 }
 
 #timer {

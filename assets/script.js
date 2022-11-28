@@ -19,22 +19,22 @@ var questionQuestion = [
   {
     questions: "Question 1?",
     choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
-    answer: "Option 2",
+    answerCheck: "Option 2",
   },
   {
     questions: "Question 2?",
     choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
-    answer: "Option 4",
+    answerCheck: "Option 4",
   },
   {
     questions: "Question 3?",
-    choiceButtonss: ["Option 1", "Option 2", "Option 3", "Option 4"],
-    answer: "Option 3",
+    choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    answerCheck: "Option 3",
   },
   {
     questions: "Question 4?",
     choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
-    answer: "Option 1",
+    answerCheck: "Option 1",
   }
 ]
 
@@ -63,7 +63,7 @@ function populateQuestion(array) {
       var newQuestion = document.createTextNode(array["questions"]);
       questions.append(newQuestion);
       for (i = 0; i < array.choiceButtons.length; i++) {
-          button = document.createElement("button");
+          var button = document.createElement("button");
           button.setAttribute("class", "btn btn-info");
           button.textContent = array.choiceButtons[i];
           button.setAttribute("data-value", array.choiceButtons[i]);
@@ -89,7 +89,7 @@ start.addEventListener("click", function () {
 choiceButtons.addEventListener("click", function (event) {
   if (event.target.matches("button")) {
       var selectedAnswer = event.target.textContent;
-      if(selectedAnswer != questionQuestion[questionNumber].answer){
+      if(selectedAnswer != questionQuestion[questionNumber].answerCheck){
           time -= 10;
           answerCheck.textContent = "Incorrect!";
       }else {
