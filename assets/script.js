@@ -14,27 +14,27 @@ var scoreCorrect = 0;
 var questionNumber = 0;
 var endIt = false;
 
-// Creating an array carrying arrays? carrying questions, choices and answers
+// Creating an array carrying questions, choices and answers
 var questionQuestion = [
   {
-    questions: "Question 1?",
-    choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
-    answerCheck: "Option 2",
+    questions: "What is \"var\" short for?",
+    choiceButtons: ["Variation", "Variable", "Varnish", "Variety"],
+    answerCheck: "Variable",
   },
   {
-    questions: "Question 2?",
-    choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
-    answerCheck: "Option 4",
+    questions: "When was JavaScript created?",
+    choiceButtons: ["1987", "1990", "2002", "1995"],
+    answerCheck: "1995",
   },
   {
-    questions: "Question 3?",
-    choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
-    answerCheck: "Option 3",
+    questions: "Which of the following is NOT a primitive data type?",
+    choiceButtons: ["String", "Number", "Object", "Boolean"],
+    answerCheck: "Object",
   },
   {
-    questions: "Question 4?",
-    choiceButtons: ["Option 1", "Option 2", "Option 3", "Option 4"],
-    answerCheck: "Option 1",
+    questions: "What method can you use to write a message to the console?",
+    choiceButtons: ["log()", "fill()", "entries()", "find()"],
+    answerCheck: "log()",
   }
 ]
 
@@ -42,7 +42,7 @@ var questionQuestion = [
 function startTimer(){
   var timeInterval = setInterval(function(){
     if(!endIt && time>0){
-      document.getElementById("timer").innerHTML = "Time Remaining: " + time;
+      document.getElementById("timer").innerHTML = "Seconds Remaining: " + time;
       time--;
     } else {
       clearInterval(timeInterval);  
@@ -50,8 +50,8 @@ function startTimer(){
       if(scoreCorrect==0 || time==0){
           time=0;
       }
-      questions.textContent = "";
-      choiceButtons.innerHTML = "";
+      questions.textContent = ""; //clears question
+      choiceButtons.innerHTML = ""; //clears choices
       answerCheck.textContent = "";
     }
   },1000);
@@ -78,24 +78,17 @@ function populateQuestion(array) {
   }
 }
 
-// Event listener starts time
+// Event listener starts time and quiz
 start.addEventListener("click", function () {
   startTimer();
   var questionDisplay = questionQuestion[questionNumber];
   populateQuestion(questionDisplay);
 });
 
-// listens for the selected choices
+// listens to button click
 choiceButtons.addEventListener("click", function (event) {
   if (event.target.matches("button")) {
       var selectedAnswer = event.target.textContent;
-      if(selectedAnswer != questionQuestion[questionNumber].answerCheck){
-          time -= 10;
-          answerCheck.textContent = "Incorrect!";
-      }else {
-          scoreCorrect++;
-          answerCheck.textContent = "Correct!";
-      }
       setTimeout(function () {
           questionNumber++;
           var questionDisplay = questionQuestion[questionNumber];
