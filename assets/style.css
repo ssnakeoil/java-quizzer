@@ -5,6 +5,16 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif
 }
   
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #5F3215;
+  color: #D1D274;
+  line-height: normal;
+  vertical-align: middle;
+}
 
 #timer {
   margin: 10px auto;
@@ -61,6 +71,7 @@ button {
   margin: 0px 0px 5px 100px;
   border-radius: 5px;
   background-color: #B89647;
+  width: 500px;
   display: block;
 }
 
