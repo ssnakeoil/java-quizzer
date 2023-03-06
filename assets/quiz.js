@@ -38,70 +38,88 @@ var questionQuestion = [
   }
 ]
 
+// Event listener starts time and quiz
+start.addEventListener("click", function () {
+  startTimer();
+  start.style.display = "none";
+  var questionDisplay = questionQuestion[questionNumber];
+  populateQuestion(questionDisplay);
+});
+
+// listens to button click
+choiceButtons.addEventListener("click", function (event) {
+  if (event.target.matches("button")) {//checks if button is clicked
+      var selectedAnswer = event.target.textContent;
+      var correctAnswer = questionQuestion[questionNumber].answerCheck;
+      if (selectedAnswer === correctAnswer) {//checks if answer is correct
+          answerCheck.textContent = "Correct!";
+          scoreCorrect++;
+      } else {
+          answerCheck.textContent = "Wrong!";
+      }
+      setTimeout(function () {
+          questionNumber++;//increments the question number
+          var questionDisplay = questionQuestion[questionNumber];
+          if(time<0){
+              time=0;
+          }
+          questions.textContent = "";
+          choiceButtons.innerHTML = "";
+          populateQuestion(questionDisplay);
+          console.log(scoreCorrect);
+      }, 100); //sets a delay of 100ms before the next question is displayed
+  }
+});
+
 // Code for timer
 function startTimer(){
-  var timeInterval = setInterval(function(){
-    if(!endIt && time>0){
+  //sets interval for timer
+  var timeInterval = setInterval(function() {
+    if(!endIt && time>0){//checks if the quiz is over or if the time is up
       document.getElementById("timer").innerHTML = "Seconds Remaining: " + time;
       time--;
     } else {
       clearInterval(timeInterval);  
       endIt = true;
-      if(scoreCorrect==0 || time==0){
+      if(scoreCorrect==0 || time==0){//
           time=0;
       }
       questions.textContent = ""; //clears question
       choiceButtons.innerHTML = ""; //clears choices
-      answerCheck.textContent = "";
+      // answerCheck.textContent = ""; //clears answer check
+      var finalScore = document.createElement("h2");
+      finalScore.textContent = "Your final score is " + time + "!";
+      quizContainer.append(finalScore);
+      var initials = document.createElement("input");
+      initials.setAttribute("type", "text");
+      initials.setAttribute("placeholder", "Enter initials");
+      initials.setAttribute("id", "initials");
+      quizContainer.append(initials);
+      var submit = document.createElement("button");
+      submit.setAttribute("class", "btn btn-info");
+      submit.setAttribute("id", "submit");
+      submit.textContent = "Submit";
+      quizContainer.append(submit);
+      submit.addEventListener("click", function(){
+          var initials = document.getElementById("initials").value;
+          var score = scoreCorrect;
+          var scoreObject = {
+              initials: initials,
+              score: score
+          }
+          var scoreArray = JSON.parse(localStorage.getItem("scoreArray"));
+          if(scoreArray==null){
+              scoreArray = [];
+          }
+          scoreArray.push(scoreObject);
+          localStorage.setItem("scoreArray", JSON.stringify(scoreArray));
+          window.location.href = "highscores.html";
+      });
     }
-  },1000);
+  }, 1000); // 1000ms = 1s
 }
 
-//////////////////////////////////////////////////
-
-// Renders the Highscore page 
-
-function  renderSubmitScore(){
-  var h1 = document.createElement("h4");
-  h1.textContent = "Your Score is: " + timeLeft ;
-  submitForm.append(h1);
-  var br = document.createElement("br");
-  var label = document.createElement("label");
-  label.setAttribute("for", "initials");
-  label.textContent = "Enter Your Initials";
-  submitForm.append(label);
-  submitForm.append(br);
-  var br = document.createElement("br");
-  var initials = document.createElement("input");
-  initials.setAttribute("type", "text");
-  initials.setAttribute("id", "initials");
-  initials.setAttribute("name", "initials");
-  initials.required= true;
-  submitForm.append(initials);
-  submitForm.append(br);
-  var submit = document.createElement("input");
-  submit.setAttribute("class", "btn btn-info");
-  submit.setAttribute("value", "Submit");
-  submit.setAttribute("onclick", "saveScore(document.getElementById('initials').value,timeLeft)");
-  submitForm.append(submit);
-  timer.style.display = "none";
-}
-
-// stores the high score
-function saveScore(userInitials, score){
-  var initials = document.getElementById("initials")
-  if(initials.value==""){
-      answerStatus.textContent = "Initials can't be blank!";
-  } else{
-      myStorage = window.localStorage;
-      myStorage.setItem(userInitials, score);
-      window.location.href = "highscore.html"
-  }
-}
-
-/////////////////////////////////////////////////?
-
-// Attempting to devise a function that populates question in place
+// A function that populates question in place
 function populateQuestion(array) {
   if(array != undefined){
       var newQuestion = document.createTextNode(array["questions"]);
@@ -122,27 +140,3 @@ function populateQuestion(array) {
   }
 }
 
-// Event listener starts time and quiz
-start.addEventListener("click", function () {
-  startTimer();
-  start.style.display = "none";
-  var questionDisplay = questionQuestion[questionNumber];
-  populateQuestion(questionDisplay);
-});
-
-// listens to button click
-choiceButtons.addEventListener("click", function (event) {
-  if (event.target.matches("button")) {
-      var selectedAnswer = event.target.textContent;
-      setTimeout(function () {
-          questionNumber++;
-          var questionDisplay = questionQuestion[questionNumber];
-          if(time<0){
-              time=0;
-          }
-          questions.textContent = "";
-          choiceButtons.innerHTML = "";
-          populateQuestion(questionDisplay);
-      }, 100);
-  }
-});

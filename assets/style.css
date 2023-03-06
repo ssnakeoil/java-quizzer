@@ -63,6 +63,11 @@ ul {
   padding-top: 50px;
 }
 
+#answerCheck {
+  text-align: center;
+  padding-top: 50px;
+}
+
 button {
   border-color: #5F3215;
   border-style: solid 2px;
