@@ -119,30 +119,18 @@ function populateQuestion(array) {
   }
 }
 
-//renders score
+//renders score and takes user to score page
 function renderScore() {
   quizContainer.textContent = "Your final score is " + time + "!";
   var scoreName = document.createElement("input");
   scoreName.setAttribute("type", "text");
+  scoreName.setAttribute("id", "scoreName");
+  scoreName.setAttribute("placeholder", "Enter your initials");
   var submitScore = document.createElement("button");
   submitScore.setAttribute("id", "submitScore");
   submitScore.textContent = "Submit";
-  scoreContainer.append(scoreName);
-  scoreContainer.append(submitScore);
-
-  // var finalScore = document.createElement("h2");
-  // quizContainer.append(finalScore);
-  // var initials = document.createElement("input");
-  // initials.setAttribute("placeholder", "Enter initials");
-  // initials.setAttribute("id", "initials");
-  // quizContainer.append(scoreName);
-  // var submit = document.createElement("button");
-  // submit.setAttribute("class", "btn btn-info");
-  // submit.setAttribute("id", "submit");
-  // submit.textContent = "Submit";
-  // quizContainer.append(submit);
-  // var scoreName = document.querySelector("#scoreName");
-  // var submitScore = document.querySelector("#submitScore");
+  quizContainer.append(scoreName);
+  quizContainer.append(submitScore);
   submitScore.addEventListener("click", function () {
     var name = document.getElementById("scoreName").value;
     var score = scoreCorrect;
