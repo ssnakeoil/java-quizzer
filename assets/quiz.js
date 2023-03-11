@@ -16,8 +16,8 @@ var endIt = false;
 // Creating an array carrying questions, choices and answers
 // Creating an array carrying questions, choices and answers
 var questionQuestion = [
-  {  
-    questions: "What is \"var\" short for?",
+  {
+    questions: 'What is "var" short for?',
     choiceButtons: ["Variation", "Variable", "Varnish", "Variety"],
     answerCheck: "Variable",
   },
@@ -35,8 +35,8 @@ var questionQuestion = [
     questions: "What method can you use to write a message to the console?",
     choiceButtons: ["log()", "fill()", "entries()", "find()"],
     answerCheck: "log()",
-  }
-]
+  },
+];
 
 // Event listener starts time and quiz
 start.addEventListener("click", function () {
@@ -48,95 +48,115 @@ start.addEventListener("click", function () {
 
 // listens to button click
 choiceButtons.addEventListener("click", function (event) {
-  if (event.target.matches("button")) {//checks if button is clicked
-      var selectedAnswer = event.target.textContent;
-      var correctAnswer = questionQuestion[questionNumber].answerCheck;
-      if (selectedAnswer === correctAnswer) {//checks if answer is correct
-          answerCheck.textContent = "Correct!";
-          scoreCorrect++;
-      } else {
-          answerCheck.textContent = "Wrong!";
+  if (event.target.matches("button")) {
+    //checks if button is clicked
+    var selectedAnswer = event.target.textContent;
+    var correctAnswer = questionQuestion[questionNumber].answerCheck;
+    if (selectedAnswer === correctAnswer) {
+      //checks if answer is correct
+      answerCheck.textContent = "Correct!";
+      scoreCorrect++;
+    } else {
+      answerCheck.textContent = "Wrong!";
+    }
+    setTimeout(function () {
+      questionNumber++; //increments the question number
+      var questionDisplay = questionQuestion[questionNumber];
+      if (time < 0) {
+        time = 0;
       }
-      setTimeout(function () {
-          questionNumber++;//increments the question number
-          var questionDisplay = questionQuestion[questionNumber];
-          if(time<0){
-              time=0;
-          }
-          questions.textContent = "";
-          choiceButtons.innerHTML = "";
-          populateQuestion(questionDisplay);
-          console.log(scoreCorrect);
-      }, 100); //sets a delay of 100ms before the next question is displayed
+      questions.textContent = "";
+      choiceButtons.innerHTML = "";
+      populateQuestion(questionDisplay);
+      console.log(scoreCorrect);
+    }, 100); //sets a delay of 100ms before the next question is displayed
   }
 });
 
 // Code for timer
-function startTimer(){
+function startTimer() {
   //sets interval for timer
-  var timeInterval = setInterval(function() {
-    if(!endIt && time>0){//checks if the quiz is over or if the time is up
+  var timeInterval = setInterval(function () {
+    if (!endIt && time > 0) {
+      //checks if the quiz is over or if the time is up
       document.getElementById("timer").innerHTML = "Seconds Remaining: " + time;
       time--;
     } else {
-      clearInterval(timeInterval);  
+      clearInterval(timeInterval);
       endIt = true;
-      if(scoreCorrect==0 || time==0){//
-          time=0;
+      if (scoreCorrect == 0 || time == 0) {
+        //
+        time = 0;
       }
       questions.textContent = ""; //clears question
       choiceButtons.innerHTML = ""; //clears choices
-      // answerCheck.textContent = ""; //clears answer check
-      var finalScore = document.createElement("h2");
-      finalScore.textContent = "Your final score is " + time + "!";
-      quizContainer.append(finalScore);
-      var initials = document.createElement("input");
-      initials.setAttribute("type", "text");
-      initials.setAttribute("placeholder", "Enter initials");
-      initials.setAttribute("id", "initials");
-      quizContainer.append(initials);
-      var submit = document.createElement("button");
-      submit.setAttribute("class", "btn btn-info");
-      submit.setAttribute("id", "submit");
-      submit.textContent = "Submit";
-      quizContainer.append(submit);
-      submit.addEventListener("click", function(){
-          var initials = document.getElementById("initials").value;
-          var score = scoreCorrect;
-          var scoreObject = {
-              initials: initials,
-              score: score
-          }
-          var scoreArray = JSON.parse(localStorage.getItem("scoreArray"));
-          if(scoreArray==null){
-              scoreArray = [];
-          }
-          scoreArray.push(scoreObject);
-          localStorage.setItem("scoreArray", JSON.stringify(scoreArray));
-          window.location.href = "highscores.html";
-      });
+      answerCheck.textContent = ""; //clears answer check
+      timer.style.display = "none";
+
+      renderScore();
     }
   }, 1000); // 1000ms = 1s
 }
 
 // A function that populates question in place
 function populateQuestion(array) {
-  if(array != undefined){
-      var newQuestion = document.createTextNode(array["questions"]);
-      questions.append(newQuestion);
-      for (i = 0; i < array.choiceButtons.length; i++) {
-          var button = document.createElement("button");
-          button.setAttribute("class", "btn btn-info");
-          button.textContent = array.choiceButtons[i];
-          button.setAttribute("data-value", array.choiceButtons[i]);
-          choiceButtons.append(button);
-      }
+  if (array != undefined) {
+    var newQuestion = document.createTextNode(array["questions"]);
+    questions.append(newQuestion);
+    for (i = 0; i < array.choiceButtons.length; i++) {
+      var button = document.createElement("button");
+      button.setAttribute("class", "btn btn-info");
+      button.textContent = array.choiceButtons[i];
+      button.setAttribute("data-value", array.choiceButtons[i]);
+      choiceButtons.append(button);
+    }
   } else {
-      endIt = true;
-      answerCheck.textContent = "";
-      if(scoreCorrect==0){
-          time=0;
-      }
+    endIt = true;
+    answerCheck.textContent = "";
+    if (scoreCorrect == 0) {
+      time = 0;
+    }
   }
 }
 
+//renders score
+function renderScore() {
+  quizContainer.textContent = "Your final score is " + time + "!";
+  var scoreName = document.createElement("input");
+  scoreName.setAttribute("type", "text");
+  var submitScore = document.createElement("button");
+  submitScore.setAttribute("id", "submitScore");
+  submitScore.textContent = "Submit";
+  scoreContainer.append(scoreName);
+  scoreContainer.append(submitScore);
+
+  // var finalScore = document.createElement("h2");
+  // quizContainer.append(finalScore);
+  // var initials = document.createElement("input");
+  // initials.setAttribute("placeholder", "Enter initials");
+  // initials.setAttribute("id", "initials");
+  // quizContainer.append(scoreName);
+  // var submit = document.createElement("button");
+  // submit.setAttribute("class", "btn btn-info");
+  // submit.setAttribute("id", "submit");
+  // submit.textContent = "Submit";
+  // quizContainer.append(submit);
+  // var scoreName = document.querySelector("#scoreName");
+  // var submitScore = document.querySelector("#submitScore");
+  submitScore.addEventListener("click", function () {
+    var name = document.getElementById("scoreName").value;
+    var score = scoreCorrect;
+    var scoreObject = {
+      name: name,
+      score: score,
+    };
+    var scoreArray = JSON.parse(localStorage.getItem("scoreArray"));
+    if (scoreArray == null) {
+      scoreArray = [];
+    }
+    scoreArray.push(scoreObject);
+    localStorage.setItem("scoreArray", JSON.stringify(scoreArray));
+    console.log(time + scoreName);
+    window.location.href = "score.html";
+  });
+}

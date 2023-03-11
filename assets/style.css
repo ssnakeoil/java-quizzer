@@ -1,24 +1,24 @@
 body {
   font-size: medium;
-  color:#5F3215;
+  color: #5f3215;
   background-color: #869342;
-  font-family: Verdana, Geneva, Tahoma, sans-serif
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-  
+
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #5F3215;
-  color: #D1D274;
+  background-color: #5f3215;
+  color: #d1d274;
   line-height: normal;
   vertical-align: middle;
 }
 
 #timer {
   margin: 10px auto;
-  text-align:center;
+  text-align: center;
   height: 150px;
   width: 300px;
   position: relative;
@@ -33,24 +33,30 @@ ul {
   left: 250px;
   top: 200px;
   border-radius: 20px;
-  background-color: #B89647;
+  background-color: #b89647;
   opacity: 50%;
-  transition: .5s ease;
+  transition: 0.5s ease;
   cursor: pointer;
 }
 
 #start:hover {
   opacity: 100%;
-  transition: .5s ease;
+  transition: 0.5s ease;
 }
 
 #quizContainer {
   margin: 25px auto;
-  background-color: #D1D274;
+  background-color: #d1d274;
   height: 450px;
   width: 700px;
   border-radius: 15px;
   position: relative;
+}
+
+input {
+  text-align: center;
+  margin: auto;
+  display: block;
 }
 
 #questions {
@@ -69,19 +75,18 @@ ul {
 }
 
 button {
-  border-color: #5F3215;
+  border-color: #5f3215;
   border-style: solid 2px;
   border-width: thin;
   padding: 10px;
   margin: 0px 0px 5px 100px;
   border-radius: 5px;
-  background-color: #B89647;
+  background-color: #b89647;
   width: 500px;
   display: block;
 }
 
 button:hover {
-  border-color: #B89647;
-  background-color: #D1D274;
+  border-color: #b89647;
+  background-color: #d1d274;
 }
-

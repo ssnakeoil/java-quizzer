@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JavaScript Quiz</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>JavaScript Quiz</title>
-  <link rel="stylesheet" href="./assets/style.css" />
-</head>
-
-<body>
-  <div id="quizContainer">
-    <div id="start">Start Quiz!</div>
-    <div id="quiz">
-      <div id="questions"></div>
-      <div id="choiceButtons"></div>
-      <div id="answerCheck"></div>
+  <body>
+    <div id="quizContainer">
+      <div id="start">Start Quiz!</div>
+      <div id="quiz">
+        <div id="questions"></div>
+        <div id="choiceButtons"></div>
+        <div id="answerCheck"></div>
+      </div>
+      <div hidden id="scoreContainer">
+        <!-- <input placeholder="name" id="scoreName" />
+        <button id="submitScore">Submit</button> -->
+      </div>
     </div>
-  </div>
-  <div id="scoreContainer">
-    <div id="score"></div>
-    <div id="scoreForm"></div>
-  <div id="timer"></div>
-  <script src="./assets/quiz.js"></script>
-</body>
-
+    
+    <div id="timer"></div>
+    <script src="./assets/quiz.js"></script>
+  </body>
 </html>
