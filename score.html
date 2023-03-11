@@ -1,41 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Quiz Scores</title>
     <link rel="stylesheet" href="./assets/style.css" />
-</head>
+  </head>
 
-<body>
-    <div class="card">
+  <body>
+    <div id="scoreContainer">
       <h1>Score Tracker</h1>
-      <form id="score-form" method="POST">
-        <label for="score-text">Add a Score: </label>
-        <input placeholder="name" id="name" />
-        <button id="submitScore">Submit</button>
-      </form>
-      <p>Score Count: <span id="score-count">0</span></p>
-      <ul id="score-list"></ul>
-  
-  </div>
+      <ol id="highscores"></ol>
+      <a href="index.html"><button>Go Back</button></a>
+      <button id="clear">Clear Highscores</button>
+      </div>
+    </div>
     <script src="./assets/score.js"></script>
   </body>
-
 </html>
-
- <!-- <ul>
-            <li>
-                <form id="score-form" method="post">
-                    <label for="name">Enter a display name:</label>
-                    <input type="text" id="score-names" placeholder="Name/initials" />
-                </form>
-            </li>
-            <li>
-                <!-- <div id="score-number"></div>
-                <input type="text" id="score-number" placeholder="Score" />
-            </li>
-        </ul> -->
-        <!-- <button id="submit">SUBMIT</button> -->

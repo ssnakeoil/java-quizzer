@@ -131,20 +131,25 @@ function renderScore() {
   submitScore.textContent = "Submit";
   quizContainer.append(scoreName);
   quizContainer.append(submitScore);
+  
   submitScore.addEventListener("click", function () {
     var name = document.getElementById("scoreName").value;
-    var score = scoreCorrect;
+    var score = time;
     var scoreObject = {
       name: name,
       score: score,
     };
+
     var scoreArray = JSON.parse(localStorage.getItem("scoreArray"));
     if (scoreArray == null) {
       scoreArray = [];
     }
+
+    // saves score to local storage
     scoreArray.push(scoreObject);
     localStorage.setItem("scoreArray", JSON.stringify(scoreArray));
-    console.log(time + scoreName);
+
+    //redirects to score page
     window.location.href = "score.html";
   });
 }

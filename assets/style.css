@@ -39,12 +39,17 @@ ul {
   cursor: pointer;
 }
 
+a {
+  text-decoration: none;
+}
+
 #start:hover {
   opacity: 100%;
   transition: 0.5s ease;
 }
 
-#quizContainer {
+#quizContainer,
+#scoreContainer {
   margin: 25px auto;
   background-color: #d1d274;
   height: 450px;
