@@ -38,13 +38,15 @@ var questionQuestion = [
   },
 ];
 
-// Event listener starts time and quiz
-start.addEventListener("click", function () {
+// starts time and quiz
+function startGame() {
   startTimer();
   start.style.display = "none";
   var questionDisplay = questionQuestion[questionNumber];
   populateQuestion(questionDisplay);
-});
+};
+
+start.onclick = startGame;
 
 // listens to button click
 choiceButtons.addEventListener("click", function (event) {
