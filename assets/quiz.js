@@ -6,14 +6,15 @@ var choiceButtons = document.getElementById("choiceButtons");
 var answerCheck = document.getElementById("answerCheck");
 var timer = document.getElementById("timer");
 var start = document.getElementById("start");
-
-// Initializing stats for timer, score, and questions
+var scoreContainer = document.getElementById("scoreContainer");
+var scoreMessage = document.getElementById("scoreMessage");
+var submitScore = document.getElementById("submitScore");
+var scoreName = document.getElementById("scoreName");
 var time = 60;
 var scoreCorrect = 0;
 var questionNumber = 0;
 var endIt = false;
 
-// Creating an array carrying questions, choices and answers
 // Creating an array carrying questions, choices and answers
 var questionQuestion = [
   {
@@ -41,12 +42,11 @@ var questionQuestion = [
 // starts time and quiz
 function startGame() {
   startTimer();
+  timer.textContent = "Seconds Remaining: " + time; //shows time from the beginning of quiz
   start.style.display = "none";
   var questionDisplay = questionQuestion[questionNumber];
   populateQuestion(questionDisplay);
 };
-
-start.onclick = startGame;
 
 // listens to button click
 choiceButtons.addEventListener("click", function (event) {
@@ -81,7 +81,7 @@ function startTimer() {
   var timeInterval = setInterval(function () {
     if (!endIt && time > 0) {
       //checks if the quiz is over or if the time is up
-      document.getElementById("timer").innerHTML = "Seconds Remaining: " + time;
+      timer.innerHTML = "Seconds Remaining: " + time;
       time--;
     } else {
       clearInterval(timeInterval);
@@ -123,16 +123,9 @@ function populateQuestion(array) {
 
 //renders score and takes user to score page
 function renderScore() {
-  quizContainer.textContent = "Your final score is " + time + "!";
-  var scoreName = document.createElement("input");
-  scoreName.setAttribute("type", "text");
-  scoreName.setAttribute("id", "scoreName");
-  scoreName.setAttribute("placeholder", "Enter your initials");
-  var submitScore = document.createElement("button");
-  submitScore.setAttribute("id", "submitScore");
-  submitScore.textContent = "Submit";
-  quizContainer.append(scoreName);
-  quizContainer.append(submitScore);
+  quizContainer.setAttribute('class', 'hide');
+  scoreContainer.removeAttribute('class');
+  scoreMessage.textContent = "Your final score is " + time + "!";
   
   submitScore.addEventListener("click", function () {
     var name = document.getElementById("scoreName").value;
@@ -155,3 +148,5 @@ function renderScore() {
     window.location.href = "score.html";
   });
 }
+
+start.onclick = startGame;
